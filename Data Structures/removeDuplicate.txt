@@ -1,0 +1,207 @@
+#include <iostream>
+using namespace std;
+
+
+struct Node{
+int data;
+Node *next;
+};
+
+
+Node* insert(int x , Node *head){
+	Node *newnode = new Node();
+	Node *temp;
+	newnode->data = x;
+	
+	if(head==NULL)
+	{
+		head = newnode;
+		newnode->next = NULL;
+		
+	}
+	else
+	{
+		temp = head;
+		while(temp->next){
+		temp=temp->next;
+		}
+		temp->next = newnode;
+		newnode->next = NULL;
+	}
+	
+return head;
+}
+
+
+void print(Node *root){
+Node *temp;
+temp = root;
+while(temp){
+	cout<<temp->data<<"->";
+	temp = temp->next;
+	
+}
+}
+
+
+Node* mergeList(Node *list , Node *list1)
+{
+	
+	Node *result = NULL;
+	
+	if(list==NULL)
+	{
+		return list1;
+	}else if(list1==NULL)
+	{
+		return list;
+	}
+	else if(list->data <= list1->data)
+	{
+		result = list;
+		result->next = mergeList(list->next , list1);
+		
+	}
+	else 
+	{
+		result = list1;
+		result->next = mergeList(list,list1->next);
+		
+	}
+  return result;
+}
+
+// void DeleteRepeat(){
+// while(temp ){
+//  for(int i = 1 ; i<M-1 && temp;i++)
+//  	temp = temp->next;
+ 	
+//  if(temp->next==NULL)
+//  break;
+ 
+//  for (int j=1; j<N && temp; j++)
+//         {
+//             rev = temp->next;        
+//             temp->next = rev->next;
+//             delete rev;
+// }
+
+// temp = temp->next;
+// }
+// }
+
+Node *reverse(Node *root){
+	Node *prev = NULL;
+	Node *curr = root, *next;
+	
+	while(curr)
+	{
+		next = curr->next;
+		curr->next = prev;
+		prev = curr;
+		curr = next;
+	}
+	
+	root = prev;
+	return root;
+}
+
+
+Node* RemoveDuplicate(Node *root){
+	Node *temp = root;
+	Node *temp2 =root; 
+	Node *rev;
+	while(temp)
+	{
+		while(temp2 && temp2->next){
+			if(temp2->next->data==temp->data)
+			{
+				rev = temp2->next;
+				temp2->next =rev->next;
+				delete rev;
+				continue;
+			}
+			temp2 = temp2->next;
+		}
+		temp = temp->next;
+		temp2 =temp;
+		
+	}
+	
+	return root;
+}
+
+Node *ReverseKNode(Node *rot ,int K)
+{
+	int k ;
+	Node *prev , *test ,*mark;
+	Node *curr = rot, *nest;
+	test = rot;
+	for(int j = 1 ; j<K && test ;j++)
+			{
+				test = test->next;
+			}
+	if(test)
+	{   
+		rot = test;
+	}
+	else
+    	rot = curr;
+	
+	while(1){
+		k = K;
+		prev = curr;
+		mark = prev;
+		curr = curr->next;
+   // cout<<prev->data <<" "<<curr->data<<k;
+   while(--k)
+		{
+		nest = curr->next;
+		curr->next = prev;
+		prev = curr;
+		curr = nest;
+	
+		}
+		
+		Node *temp = nest;
+		for(int i = 1 ; i<K && temp ;i++)
+			{
+				temp = temp->next;
+			}
+		if(temp)
+		mark->next = temp;
+		else
+	{
+		mark->next = nest;
+		break;
+	}
+	
+		}
+		
+return rot;
+}
+
+int main() {
+	// your code goes here
+Node *root = NULL; 
+int count[3]={0,0,0};
+root = insert(0 , root);
+insert(1 , root);
+insert(2 , root);
+insert(3 , root);
+insert(4 , root);
+insert(5 , root);
+insert(6 , root);
+insert(7 , root);
+insert(8 , root);
+insert(9 , root);
+insert(10 , root);
+insert(11 , root);
+insert(12 , root);
+print(root);
+cout<<endl;
+root = ReverseKNode(root , 5);
+print(root);
+
+	return 0;
+}

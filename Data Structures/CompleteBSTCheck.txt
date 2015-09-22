@@ -1,0 +1,136 @@
+# include <iostream>
+# include <cstdlib>
+using namespace std;
+/*
+ * Node Declaration
+ */
+struct node
+{
+    int info;
+    struct node *left;
+    struct node *right;
+}*root;
+
+class BST
+{
+    public:
+        
+        
+        void insert(node *tree, node *newnode);
+        void preorder(node *);
+        bool Complete(node *);
+      
+        BST()
+        {
+            root = NULL;
+        }
+};
+
+
+void BST::insert(node *tree, node *newnode)
+{
+    if (root == NULL)
+    {
+        root = new node;
+        root->info = newnode->info;
+        root->left = NULL;
+        root->right = NULL;
+        cout<<"Root Node is Added"<<endl;
+        return;
+    }
+    if (tree->info == newnode->info)
+    {
+        cout<<"Element already in the tree"<<endl;
+        return;
+    }
+    if (tree->info > newnode->info)
+    {
+        if (tree->left != NULL)
+        {
+            insert(tree->left, newnode);	
+	}
+	else
+	{
+            tree->left = newnode;
+            (tree->left)->left = NULL;
+            (tree->left)->right = NULL;
+            cout<<"Node Added To Left"<<endl;
+            return;
+        }
+    }
+    else
+    {
+        if (tree->right != NULL)
+        {
+            insert(tree->right, newnode);
+        }
+        else
+        {
+            tree->right = newnode;
+            (tree->right)->left = NULL;
+            (tree->right)->right = NULL;
+            cout<<"Node Added To Right"<<endl;
+            return;
+        }	
+    }
+}
+
+
+void BST::preorder(node *ptr)
+{
+    if (root == NULL)
+    {
+        cout<<"Tree is empty"<<endl;
+        return;
+    }
+    if (ptr != NULL)
+    {
+        cout<<ptr->info<<"  ";
+        preorder(ptr->left);
+        preorder(ptr->right);
+    }
+}
+
+bool BST::Complete(node *ptr)
+{
+if(ptr){
+	if(ptr->left&&ptr->right)
+	{
+		Complete(node ptr->left);
+		Complete(node ptr->right);
+		
+	}else if(ptr->left&&!ptr->right)
+	{
+		Complete(node ptr->left);
+		Complete(node ptr->right);
+	}else if(!ptr->left&&!ptr->right)
+	{
+		Complete(node ptr->left);
+		Complete(node ptr->right);
+	}else if(!ptr->left&&ptr->right)
+	{
+	return false;
+	}
+}
+
+return true;
+}
+
+int main()
+{
+    int choice, num;
+    BST bst;
+    node *temp;
+    for(int i = 0 ;i < 7 ; i++)
+    {
+            temp = new node;
+            cout<<"Enter the number to be inserted : ";
+	        cin>>temp->info;
+            bst.insert(root, temp);
+    }
+    bst.preorder(root);
+    return 0 ;
+    
+}
+            
+    

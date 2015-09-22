@@ -1,0 +1,105 @@
+#include <iostream>
+using namespace std;
+
+
+struct Node{
+int data;
+Node *next;
+};
+
+class linkedList{
+Node *head;
+public:
+linkedList(){
+	head = NULL;
+}
+Node* insert(int );
+void print(Node*);
+Node* mergeList(Node* , Node*);
+
+
+	
+};
+
+Node* linkedList::insert(int x){
+	Node *newnode = new Node();
+	Node *temp;
+	newnode->data = x;
+	
+	if(head==NULL)
+	{
+		head = newnode;
+		newnode->next = NULL;
+		
+	}
+	else
+	{
+		temp = head;
+		while(temp->next){
+		temp=temp->next;
+		}
+		temp->next = newnode;
+		newnode->next = NULL;
+	}
+	
+return head;
+}
+
+void linkedList::print(Node *root){
+Node *temp;
+temp = root;
+while(temp){
+	cout<<temp->data<<"->";
+	temp = temp->next;
+	
+}
+}
+
+
+Node* mergeList(Node *list , Node *list1)
+{
+	
+	Node *result = NULL;
+	
+	if(list==NULL)
+	{
+		return list1;
+	}else if(list1==NULL)
+	{
+		return list;
+	}
+	else if(list->data <= list1->data)
+	{
+		result = list;
+		result->next = mergeList(list->next , list1);
+		
+	}
+	else 
+	{
+		result = list1;
+		result->next = mergeList(list,list1->next);
+		
+	}
+  return result;
+}
+
+int main() {
+	// your code goes here
+	linkedList list,list1;
+	Node *add1 , *add2;
+	list.insert(1);
+	list.insert(3);
+	add1 = list.insert(4);
+	list1.insert(12);
+    add2=list1.insert(33);
+    list.print(add1);
+    list.print(add2);
+ //  add2 = list.mergeList(add1 , add2);
+   list.print(add2);
+	//add2 = list1.insert(48);
+	//add2 = mergeList(add1 , add2);
+	
+	
+	
+	return 0;
+}

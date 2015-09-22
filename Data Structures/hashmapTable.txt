@@ -1,0 +1,138 @@
+#include <iostream>
+#include<string>
+using namespace std;
+
+struct item{
+string name;
+string drink;
+item* next;
+};
+
+class Hash{
+	
+ static const int tablesize = 10;
+ item *hashTable[tablesize];
+ 
+public:
+Hash(){
+
+for(int j = 0 ; j<tablesize; j++ ){
+	hashTable[j] = new item;
+	hashTable[j]->name = "empty";
+	hashTable[j]->drink = "empty";
+	hashTable[j]->next = NULL;
+}	
+	
+}
+int hash(string);
+void Additem(string name , string drink);
+int NumIndex(int index);
+void printTable();
+void PrintItem(int index);
+void search(string key);
+};
+
+
+int Hash::hash(string key){
+int sum=0;
+for(int i =0 ; i<key.length();i++){
+	
+sum = sum +(int)key[i];
+}	
+	
+	return sum % tablesize;
+}
+
+
+void Hash::Additem(string name , string drink){
+	int temp = hash(name);
+	if(hashTable[temp]->name=="empty")
+	{
+		hashTable[temp]->name = name;
+		hashTable[temp]->drink = drink;
+		hashTable[temp]->next = NULL;
+
+}
+
+else
+{ item *ptr , *n;
+ ptr = hashTable[temp];
+ while(ptr->next){
+	ptr = ptr->next;
+}
+ n = new item;
+ n->name = name;
+ n->drink = drink;
+ n->next = NULL;
+ ptr->next = n;
+ }
+}
+
+int Hash::NumIndex(int index){
+ 	
+item *ptr = hashTable[index];
+int count = 0 ;
+if(ptr->name == "empty")
+{
+	return count ;
+}
+else{
+while(ptr)
+{
+	ptr = ptr->next;
+	count++;
+}
+return count ;
+}
+}
+
+void Hash:: printTable(){
+	int num;
+for(int i =0 ; i < tablesize ; i++)	{
+	num = NumIndex(i);
+	cout<< num <<"  ";
+	cout<<hashTable[i]->name<<"  ";
+	cout<<hashTable[i]->drink<<"  ";
+	cout<<endl;
+}
+}
+
+
+void Hash:: PrintItem(int index){
+if(hashTable[index]->name=="empty")
+{
+	cout<<hashTable[index]->name;
+}
+else
+{
+	item *ptr = hashTable[index];
+	while(ptr)
+	{
+		cout<<ptr->name <<"  "<< ptr-> drink <<endl;
+		ptr=ptr->next;
+	}
+}
+}
+
+void Hash:: search(string key){
+	int index = hash(key);
+	if(hashTable[index]->name=="empty"){
+		cout<<"THis is empty";
+	}
+	else{
+		cout<<"key exist";
+	}
+}
+int main() {
+	// your code goes here
+	
+   Hash sample;
+   sample.Additem("dev" , "maaza");
+   sample.Additem("raman" , "Vodka");
+   sample.Additem("namra" ,"sprite" );
+   sample.Additem("sunidhi","mirinda");
+   sample.printTable();	
+   sample.PrintItem(7);
+   sample.search("rajdafa");
+	return 0;
+}

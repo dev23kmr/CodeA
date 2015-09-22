@@ -1,0 +1,48 @@
+#include <iostream>
+#include <map>
+#include <cstring>
+#include <algorithm>
+using namespace std;
+
+map<string , string> m ;
+
+void insert(string str){
+	string strC = str;
+	 char *ch1 ;
+	 ch1 = &str[0];
+	 sort(ch1 , ch1+str.length());
+	m[strC] = str;
+	
+	}
+
+
+
+int main() {
+	// your code goes here
+	insert("cat");
+	insert("dog");
+	insert("tac");
+	insert("god");
+	insert("act");
+	insert("mary");
+	insert("Mary");
+	insert("army");
+	int count = 0 ;
+	map<string,string>::iterator itr=m.begin();
+	for (map<string,string>::iterator it=m.begin(); it!=m.end(); ++it)
+	{            itr++;
+	        	cout<<"(";
+		for (map<string,string>::iterator it1= itr; it1!=m.end(); ++it1)
+		    {    
+		    	
+              if(it->second==it1->second)
+              {
+              	cout<<it1->first<<",";
+              }
+           
+		    }
+		    cout<<it->first<<")";
+	}  
+	
+	return 0;
+}

@@ -1,0 +1,26 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+
+int Big(int A[] , int i , int n ,int max){
+   
+   if(i==n)
+  return max;
+
+else{
+	if(max < A[i])
+    	max  = A[i];
+   
+	Big(A, i+1 , n ,max);
+}
+
+}
+int main() {
+	// your code goes here
+   int A[]= {1,2,5,8,12};
+   int ma = A[0];
+   cout<<Big(A ,1 , 5,ma);
+ 
+    return 0;
+}

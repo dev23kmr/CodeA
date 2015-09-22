@@ -1,0 +1,51 @@
+#include <iostream>
+using namespace std;
+
+int partition(int a[], int i , int len);
+void quicksort(int a[] , int i , int len)
+{
+if(i<len)
+{
+int w = partition(a,i,len);
+ quicksort(a,i,w-1);
+ quicksort(a,w+1,len);
+ }
+}
+
+
+int partition(int a[], int i , int len)
+{   
+	int pivot = a[i];
+	int left = i ;
+	int right= len;
+	while(left < right)
+	{
+		while(a[left]<=pivot)
+		left++;
+		while(a[right]>=pivot)
+        right--;
+        
+        if(left < right)
+      {
+      	int  temp = a[right];
+        a[right]  = a[left];
+        a[left]  = temp;
+      }
+	}
+	
+a[i] = a[right];
+a[right] = pivot;
+return right;	
+}
+
+
+int main() {
+	// your code goes here
+	
+	int a[] = {17 , 10 ,8 ,2 , 14 ,9 ,1 ,13};
+	quicksort(a , 0 , 7);
+	for(int i = 0 ;i < 8 ;i++){
+		cout<<a[i]<<" ";
+	}
+	return 0;
+}

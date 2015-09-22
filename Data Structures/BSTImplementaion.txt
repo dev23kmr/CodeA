@@ -1,0 +1,182 @@
+# include <iostream>
+# include <cstdlib>
+using namespace std;
+/*
+ * Node Declaration
+ */
+ 
+ char ch = 't';
+struct node
+{
+    int info;
+    struct node *left;
+    struct node *right;
+}*root;
+
+class BST
+{
+    public:
+        
+        
+        void insert(node *tree, node *newnode);
+        void preorder(node *);
+        bool Complete(node *);
+        int Height(node *);
+        void ancestor(node* , int );
+      
+        BST()
+
+        {
+            root = NULL;
+        }
+};
+
+
+int  BST::Height(node* temo){
+	
+	if(temo == NULL)
+	return 0;
+	
+	int leftH = Height(temo->left);
+	int rightH = Height(temo->right);
+	
+	if(leftH > rightH)
+	return leftH+1;
+	else
+	return rightH+1;
+}
+
+void BST::insert(node *tree, node *newnode)
+{
+    if (root == NULL)
+    {
+        root = new node;
+        root->info = newnode->info;
+        root->left = NULL;
+        root->right = NULL;
+        cout<<"Root Node is Added"<<endl;
+        return;
+    }
+    if (tree->info == newnode->info)
+    {
+        cout<<"Element already in the tree"<<endl;
+        return;
+    }
+    if (tree->info > newnode->info)
+    {
+        if (tree->left != NULL)
+        {
+            insert(tree->left, newnode);	
+	}
+	else
+	{
+            tree->left = newnode;
+            (tree->left)->left = NULL;
+            (tree->left)->right = NULL;
+            cout<<"Node Added To Left"<<endl;
+            return;
+        }
+    }
+    else
+    {
+        if (tree->right != NULL)
+        {
+            insert(tree->right, newnode);
+        }
+        else
+        {
+            tree->right = newnode;
+            (tree->right)->left = NULL;
+            (tree->right)->right = NULL;
+            cout<<"Node Added To Right"<<endl;
+            return;
+        }	
+    }
+}
+
+void BST::ancestor(node *ptr , int x){
+  
+  if(ptr){
+  	cout<<ptr->info<<"  ";
+  	if(ptr->info == x)
+  	return;
+  	if(ptr->info > x)
+  	ancestor(ptr->left , x);
+  	else
+  	ancestor(ptr->right , x);
+  	}
+	
+}
+
+void BST::preorder(node *ptr)
+{
+    if (root == NULL)
+    {
+        cout<<"Tree is empty"<<endl;
+        return;
+    }
+    if (ptr != NULL)
+    {
+        cout<<ptr->info<<"  ";
+        preorder(ptr->left);
+        preorder(ptr->right);
+    }
+}
+
+bool BST::Complete(node *ptr)
+{
+if(ptr){
+	if(ptr->left&&ptr->right)
+	{
+		Complete( ptr->left);
+		Complete( ptr->right);
+		
+	}else if(ptr->left&&!ptr->right)
+	{
+		Complete( ptr->left);
+		Complete( ptr->right);
+	}else if(!ptr->left&&!ptr->right)
+	{
+		Complete( ptr->left);
+		Complete( ptr->right);
+	}else if(!ptr->left&&ptr->right)
+	{
+	
+    ch = 'f';
+	}
+}
+if(ch=='t')
+return true;
+else
+return false;
+}
+
+int main()
+{
+    int choice, num;
+    BST bst;
+    node *temp;
+    bool check;
+    for(int i = 0 ;i < 12 ; i++)
+    {
+            temp = new node;
+            cout<<"Enter the number to be inserted : ";
+	        cin>>temp->info;
+            bst.insert(root, temp);
+    }
+    bst.preorder(root);
+    
+    // if(bst.Complete(root))
+    // cout<<"true";
+    // else
+    // cout<<"false";
+    
+    
+    // cout<<"height is "<<bst.Height(root);
+    bst.ancestor(root , 15); 
+    return 0 ;
+   
+    
+}
+            
+    
